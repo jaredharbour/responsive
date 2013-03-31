@@ -164,7 +164,10 @@ if (!function_exists('responsive_setup')):
 			
 			//if you are upgarding your theme we set our front page override to 0 so as not to effect your front page
 			$responsive_options = get_option( 'responsive_theme_options' );
-			if( $responsive_options && isset( $_GET['activated'] ) && 'posts' == get_option( 'show_on_front' ) ) {
+			if( $responsive_options && isset( $_GET['activated'] ) && 'default' == get_post_meta( get_option( 'page_on_front' ), '_wp_page_template', true ) ) {
+				$responsive_options['front_page'] = 1;
+				update_option( 'responsive_theme_options', $responsive_options );
+			} else {
 				$responsive_options['front_page'] = 0;
 				update_option( 'responsive_theme_options', $responsive_options );
 			}
